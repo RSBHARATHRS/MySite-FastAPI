@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 from requests import session
 from database import Base, engine, Session
-from models.models import Bharath
+from typing import Optional
+from pydantic import BaseModel
+
+
+from models.bharath import Bharath
+from models.project import Project
+from models.experience import Experience
 
 
 app = FastAPI()
@@ -11,14 +17,11 @@ Base.metadata.create_all(engine)
 
 @app.get('/')
 def readRoot():
-    tb = Bharath(2,'Bharath','angular',9791542199)
-    session.add(tb)
-    session.commit()
-    return { 'message': session.commit()}
+    return { 'message': 'Uvicorn running'}
 
 
 @app.get('/insert')
-def readRoot():
+def insert():
     temp = Bharath(1,'vasanth','angular',9791542199)
     session.add(temp)
     session.commit()
@@ -26,8 +29,12 @@ def readRoot():
 
 
 @app.get('/bharath')
-def readRoot():
-    # temp = Bharath(1,'vasanth','angular',9791542199)
+def readAll():
     temp = session.query(Bharath).filter(Bharath.id == 1).all()
-    # session.commit()
     return { 'message': temp}
+
+
+@app.get('/project/{id}')
+def getProject(id: int):
+    pro = session.query(Project).filter(Project.id == id).all()
+    return { 'project': pro}
