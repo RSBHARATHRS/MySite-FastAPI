@@ -24,6 +24,7 @@ def readRoot():
     session.commit()
     return { 'message': session.commit()}
 
+
 @app.get('/bharath')
 def readRoot():
     # temp = Bharath(1,'vasanth','angular',9791542199)
