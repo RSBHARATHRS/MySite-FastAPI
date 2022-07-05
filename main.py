@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from requests import session
 from database import Base, engine, Session
-from models import Bharath
+from models.models import Bharath
 
 
 app = FastAPI()
